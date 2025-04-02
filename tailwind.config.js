@@ -6,7 +6,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#DE0000",
+        tomato: "#DE0000",
+        banana: "#F6E05E",
+        lime: "#00FF00",
+        grape: "#6B46C1",
+        blueberry: "#3182CE",
       },
     },
   },
