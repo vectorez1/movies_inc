@@ -13,7 +13,7 @@ export const MovieItem = ({
 }: MovieItemProps) => {
   return (
     <TouchableOpacity
-      className="flex justify-center items-center"
+      className="flex justify-center items-center bg-white rounded-lg shadow-md p-2"
       onPress={() => {
         // Handle movie item press
         console.log("Movie item pressed:", title);

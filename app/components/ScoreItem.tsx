@@ -12,7 +12,12 @@ const ScoreItem = ({
     <View
       className={`${
         score < 5 ? "bg-tomato" : score < 7 ? "bg-banana" : "bg-lime"
-      } rounded-full w-8 h-8 items-center justify-center ${className}`}
+      } rounded-full w-8 h-8 items-center justify-center  ${className}`}
+      style={{
+        borderWidth: 2,
+        borderColor: "white",
+        borderStyle: "solid",
+      }}
     >
       <Text className="text-white font-bold text-sm">
         {score ? score.toPrecision(2) : 0}
