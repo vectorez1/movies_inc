@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FlatList, Text, View } from "react-native";
 import Movie from "../utils/types";
 import { getMovies } from "../utils/api";
-import { MovieItem } from "../components/MovieItem";
+import { MovieItem } from "./MovieItem";
 import { useQuery } from "@tanstack/react-query";
 
 export default function MovieList() {
-  const [movies, setMovies] = useState<Movie[]>([]);
   const [page, setPage] = useState(1);
 
   const { data, isLoading, error, isSuccess } = useQuery({
@@ -42,6 +41,7 @@ export default function MovieList() {
         data={data.results.sort((a: Movie, b: Movie) =>
           a.title.localeCompare(b.title)
         )}
+        showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item.id.toString()}
         numColumns={3}
         columnWrapperStyle={{
@@ -53,8 +53,8 @@ export default function MovieList() {
         }}
         renderItem={({ item }) => (
           <MovieItem
+            id={item.id}
             title={item.title}
-            genre_ids={item.genre_ids}
             poster_path={item.poster_path}
             vote_average={item.vote_average}
             release_date={item.release_date}

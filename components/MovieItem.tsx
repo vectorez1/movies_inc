@@ -1,22 +1,32 @@
 import { Text, View, Image, TouchableOpacity } from "react-native";
 import React from "react";
-import MovieItemProps from "../utils/types";
-import { getGenreName } from "../utils/api";
 import ScoreItem from "./ScoreItem";
+import { useRouter } from "expo-router";
+
+interface MovieItemProps {
+  id: number;
+  title: string;
+  poster_path: string;
+  vote_average: number;
+  release_date: string;
+}
 
 export const MovieItem = ({
+  id,
   title,
   poster_path,
-  genre_ids,
   vote_average,
   release_date,
 }: MovieItemProps) => {
+  const router = useRouter();
+
   return (
     <TouchableOpacity
       className="flex justify-center items-center bg-white rounded-lg shadow-md p-2"
       onPress={() => {
         // Handle movie item press
         console.log("Movie item pressed:", title);
+        router.push(`/movie/${id}`);
       }}
     >
       <View className="flex-row  mb-2 w-fit">
@@ -38,10 +48,16 @@ export const MovieItem = ({
       </View>
 
       <View>
-        <Text className=" font-bold" style={{ width: 100, fontSize: 12 }}>
+        <Text
+          className=" font-bold"
+          numberOfLines={1}
+          style={{ width: 100, fontSize: 12 }}
+        >
           {title}
         </Text>
-        <Text className="text-[7px]">{release_date}</Text>
+        <Text className="text-[7px]">
+          {release_date.split("-").reverse().join("/")}
+        </Text>
       </View>
     </TouchableOpacity>
   );

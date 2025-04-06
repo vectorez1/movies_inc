@@ -13,7 +13,6 @@ export default interface Movie {
 
 export default interface MovieItemProps {
   title: string;
-  genre_ids: number[];
   poster_path: string;
   vote_average: number;
 }

@@ -25,7 +25,7 @@ export default function RootLayout() {
         <Stack.Screen
           name="movie/[id]"
           options={{
-            headerShown: true, // Show header for movie details
+            headerShown: false, // Show header for movie details
             title: "Movie Details", // Customize the header title
           }}
         />

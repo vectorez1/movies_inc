@@ -1,10 +1,10 @@
 import { View, Text } from "react-native";
 import React from "react";
-import MovieList from "../components/MovieList";
+import MovieList from "../../components/MovieList";
 
 const Index = () => {
   return (
-    <View className="w-full h-full ">
+    <View className="w-[100%] h-full">
       <MovieList />
     </View>
   );
