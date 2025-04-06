@@ -54,8 +54,11 @@ const MovieDetails = () => {
             }`,
           }}
         />
-        <View className=" flex flex-row gap-2  items-center absolute w-full bottom-[10px] p-3  ">
-          <Text className="font-bold bg-banana h-fit rounded-full mx-2 p-3">
+        <View className=" flex flex-row gap-2 items-center absolute w-full bottom-[10px] p-2  ">
+          <Text
+            className="font-bold bg-banana h-fit overflow-hidden rounded-full mx-2 p-3"
+            style={{ maxWidth: 300 }}
+          >
             {data.title}
           </Text>
           <ScoreItem
@@ -68,12 +71,21 @@ const MovieDetails = () => {
         <Text className="font-black">
           {data.release_date.split("-").reverse().join("/")}
         </Text>
-        <Category title="Genres">
-          <Text>
-            {data.genres
-              ? data.genres.map((genre: any) => genre.name).join(", ")
-              : "No genres available."}
-          </Text>
+        <Category title="Genres" className="flex-row gap-2">
+          {data.genres ? (
+            data.genres.map((genre: { id: number; name: string }) => {
+              return (
+                <Text
+                  key={genre.id}
+                  className="text-sm  px-4 py-1 rounded-full font-bold bg-banana"
+                >
+                  {genre.name}
+                </Text>
+              );
+            })
+          ) : (
+            <Text>No genres available.</Text>
+          )}
         </Category>
         <Category title="Overview">
           <Text>

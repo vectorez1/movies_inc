@@ -6,7 +6,7 @@ import { MovieItem } from "./MovieItem";
 import { useQuery } from "@tanstack/react-query";
 
 export default function MovieList() {
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(5);
 
   const { data, isLoading, error, isSuccess } = useQuery({
     queryKey: ["movies", page],
