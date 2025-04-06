@@ -38,11 +38,10 @@ export default function MovieList() {
       }}
     >
       <FlatList
-        data={
-          data.results.sort((a: Movie, b: Movie) =>
-            a.title.localeCompare(b.title)
-          ) as Movie[]
-        }
+        //Sorthing the movies by title
+        data={data.results.sort((a: Movie, b: Movie) =>
+          a.title.localeCompare(b.title)
+        )}
         keyExtractor={(item) => item.id.toString()}
         numColumns={3}
         columnWrapperStyle={{
