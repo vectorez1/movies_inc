@@ -1,19 +1,18 @@
-import { View, Text, Image, ScrollView } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { useGlobalSearchParams } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
-import { getMovieDetails, getMovieCredits } from "../../utils/api";
+import {
+  getMovieDetails,
+  getMovieCredits,
+  getMovieRecommendations,
+} from "../../utils/api";
 import React, { useEffect } from "react";
 import Category from "@/components/Category";
-import ScoreItem from "@/components/ScoreItem";
 import Credit from "@/components/Credit";
-import { Rating } from "react-native-ratings";
-import useSessionStore from "@/utils/storage";
-import MovieRating from "@/components/MovieRating";
 import MovieBanner from "@/components/MovieBanner";
 
 const MovieDetails = () => {
   const { id } = useGlobalSearchParams(); // Get the movie ID from the route
-  const { token } = useSessionStore((state) => state);
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["movieDetails", id],
@@ -41,9 +40,16 @@ const MovieDetails = () => {
     );
   }
 
-  if (!isLoadingCredits && credits) {
-    console.log(credits.cast[0]?.name);
-  }
+  const { data: recommendations } = useQuery({
+    queryKey: ["movieRecommendations", id],
+    queryFn: () => getMovieRecommendations(Number(id)),
+  });
+
+  useEffect(() => {
+    if (recommendations) {
+      console.log("Recommendations:", recommendations.results);
+    }
+  }, [recommendations]);
 
   return (
     <ScrollView>
