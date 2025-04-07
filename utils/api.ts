@@ -103,3 +103,12 @@ export const getRatedMovies = async (session_id: string, page: number) => {
   );
   return response.data;
 };
+
+export const getMovieRated = async (id: number, session_id: string) => {
+  const response = await api.get(`/movie/${id}/rating`, {
+    params: {
+      guest_session_id: session_id,
+    },
+  });
+  return response.data;
+};

@@ -9,6 +9,7 @@ import Credit from "@/components/Credit";
 import { Rating } from "react-native-ratings";
 import useSessionStore from "@/utils/storage";
 import MovieRating from "@/components/MovieRating";
+import MovieBanner from "@/components/MovieBanner";
 
 const MovieDetails = () => {
   const { id } = useGlobalSearchParams(); // Get the movie ID from the route
@@ -46,35 +47,13 @@ const MovieDetails = () => {
 
   return (
     <ScrollView>
-      <View className="h-[500px] w-[100%] mb-2">
-        <Image
-          className="w-[100%] h-[100%]"
-          source={{
-            uri: `${
-              data.poster_path
-                ? "https://image.tmdb.org/t/p/w500" + data.poster_path
-                : "../assets/images/no_image.png"
-            }`,
-          }}
-        />
-        <View className=" flex flex-row gap-2 items-center absolute w-full top-[10px] py-2  ">
-          <Text
-            className="font-bold bg-banana h-fit overflow-hidden rounded-full mx-2 p-3"
-            style={{ maxWidth: 300 }}
-          >
-            {data.title}
-          </Text>
-          <ScoreItem
-            score={data.vote_average}
-            className="scale-150 text-black"
-          />
-        </View>
+      <MovieBanner
+        id={data.id}
+        poster_path={data.poster_path}
+        title={data.title}
+        vote_average={data.vote_average}
+      />
 
-        {/*Rating UI*/}
-        <View className="w-full flex flex-row p-2 absolute bottom-[10px]">
-          <MovieRating current_rating={data.vote_average} movie_id={data.id} />
-        </View>
-      </View>
       <View className="flex-col gap-4 px-4">
         <Text className="font-black">
           {data.release_date.split("-").reverse().join("/")}

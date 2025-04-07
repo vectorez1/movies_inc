@@ -14,7 +14,27 @@ const MovieRating = ({
   const { token } = useSessionStore((state) => state);
   const [starRating, setStarRating] = React.useState(current_rating / 2);
 
-  const { mutate, isLoading, isError } = useMutation({
+  if (!token) {
+    return (
+      <Rating
+        style={{
+          marginLeft: "auto",
+          backgroundColor: "white",
+          borderRadius: 15,
+          overflow: "hidden",
+          padding: 5,
+          paddingHorizontal: 10,
+        }}
+        ratingColor="#F9C74F"
+        tintColor="white"
+        ratingCount={5}
+        startingValue={current_rating / 2}
+        imageSize={30}
+      />
+    );
+  }
+
+  const { mutate, isError } = useMutation({
     mutationFn: (newRating: number) => setRating(movie_id, token, newRating),
     onSuccess: () => {
       console.log("Rating updated successfully");
@@ -24,7 +44,7 @@ const MovieRating = ({
     },
   });
 
-  const { data, isLoading: isLoadingRating } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["movieRating", movie_id],
     queryFn: () => getRatedMovies(token, 1),
   });

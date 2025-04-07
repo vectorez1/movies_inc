@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 import React, { useEffect } from "react";
 import MovieList from "../../components/MovieList";
 import { useQuery } from "@tanstack/react-query";
