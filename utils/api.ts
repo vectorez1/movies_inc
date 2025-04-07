@@ -8,6 +8,10 @@ const api = axios.create({
   params: {
     api_key: api_key,
   },
+  headers: {
+    "Content-Type": "application/json;charset=utf-8",
+    Accept: "application/json",
+  },
 });
 export const getMovies = async (page: number) => {
   const response = await api.get("/movie/popular", {
@@ -63,4 +67,48 @@ export const getGenreName = async (id: number) => {
   const response = await api.get("/genre/movie/list");
   const genre = response.data.genres.find((g: any) => g.id === id);
   return genre ? genre.name : null;
+};
+export const getSessionToken = async () => {
+  const response = await api.get("/authentication/guest_session/new");
+  return response.data.guest_session_id;
+};
+
+export const getMovieRecommendations = async (id: number) => {
+  const response = await api.get(`/movie/${id}/recommendations`);
+  return response.data;
+};
+
+export const setRating = async (
+  id: number,
+  session_id: string,
+  rating: number
+) => {
+  const response = await api.post(
+    `/movie/${id}/rating?guest_session_id=${session_id}`,
+    {
+      value: rating,
+    }
+  );
+  return response.data;
+};
+
+export const getRatedMovies = async (session_id: string, page: number) => {
+  const response = await api.get(
+    "/guest_session/" + session_id + "/rated/movies",
+    {
+      params: {
+        page: page,
+      },
+    }
+  );
+  return response.data;
+};
+
+export const getMovieRated = async (id: number, session_id: string) => {
+  const response = await api.get(`/movie/${id}/rating`, {
+    params: {
+      guest_session_id: session_id,
+    },
+  });
+  return response.data;
 };

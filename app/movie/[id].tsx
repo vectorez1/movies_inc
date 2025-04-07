@@ -1,15 +1,18 @@
-import { View, Text, Image, ScrollView } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { useGlobalSearchParams } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
-import { getMovieDetails, getMovieCredits } from "../../utils/api";
-import React, { act } from "react";
+import {
+  getMovieDetails,
+  getMovieCredits,
+  getMovieRecommendations,
+} from "../../utils/api";
+import React, { useEffect } from "react";
 import Category from "@/components/Category";
-import ScoreItem from "@/components/ScoreItem";
 import Credit from "@/components/Credit";
+import MovieBanner from "@/components/MovieBanner";
 
 const MovieDetails = () => {
   const { id } = useGlobalSearchParams(); // Get the movie ID from the route
-  const [movie, setMovie] = React.useState(null); // State to hold movie details
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["movieDetails", id],
@@ -37,44 +40,46 @@ const MovieDetails = () => {
     );
   }
 
-  if (!isLoadingCredits && credits) {
-    console.log(credits.cast[0]?.name);
-  }
+  const { data: recommendations } = useQuery({
+    queryKey: ["movieRecommendations", id],
+    queryFn: () => getMovieRecommendations(Number(id)),
+  });
+
+  useEffect(() => {
+    if (recommendations) {
+      console.log("Recommendations:", recommendations.results);
+    }
+  }, [recommendations]);
 
   return (
     <ScrollView>
-      <View className="h-[500px] w-[100%] mb-2">
-        <Image
-          className="w-[100%] h-[100%]"
-          source={{
-            uri: `${
-              data.poster_path
-                ? "https://image.tmdb.org/t/p/w500" + data.poster_path
-                : "../assets/images/no_image.png"
-            }`,
-          }}
-        />
-        <View className=" flex flex-row gap-2  items-center absolute w-full bottom-[10px] p-3  ">
-          <Text className="font-bold bg-banana h-fit rounded-full mx-2 p-3">
-            {data.title}
-          </Text>
-          <ScoreItem
-            score={data.vote_average}
-            className="scale-150 text-black"
-          />
-        </View>
-      </View>
+      <MovieBanner
+        id={data.id}
+        poster_path={data.poster_path}
+        title={data.title}
+        vote_average={data.vote_average}
+      />
+
       <View className="flex-col gap-4 px-4">
         <Text className="font-black">
           {data.release_date.split("-").reverse().join("/")}
         </Text>
-        <Category title="Genres">
-          <Text>
-            {data.genres
-              ? data.genres.map((genre: any) => genre.name).join(", ")
-              : "No genres available."}
-          </Text>
-        </Category>
+        {data.genres.length > 0 ? (
+          <Category title="Genres" className="flex-row gap-2">
+            {data.genres.map((genre: { id: number; name: string }) => {
+              return (
+                <Text
+                  key={genre.id}
+                  className="text-sm  px-4 py-1 rounded-full font-bold bg-banana"
+                >
+                  {genre.name}
+                </Text>
+              );
+            })}
+          </Category>
+        ) : (
+          <></>
+        )}
         <Category title="Overview">
           <Text>
             {data.overview ? data.overview : "No overview available."}
