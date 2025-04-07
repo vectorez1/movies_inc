@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import MovieList from "../../components/MovieList";
 import { useQuery } from "@tanstack/react-query";
 import { getSessionToken } from "@/utils/api";
-import useSessionStore from "@/utils/storage";
+import useSessionStore from "@/utils/useSessionStore";
 
 const Index = () => {
   const { data, isLoading, error } = useQuery({

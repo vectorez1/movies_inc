@@ -2,6 +2,7 @@ import { View, Text, Image } from "react-native";
 import React from "react";
 import ScoreItem from "./ScoreItem";
 import MovieRating from "./MovieRating";
+import Like from "./Like";
 
 const MovieBanner = ({
   id,
@@ -38,6 +39,14 @@ const MovieBanner = ({
 
       {/*Rating UI*/}
       <View className="w-full flex flex-row p-2 absolute bottom-[10px]">
+        <Like
+          movie={{
+            id: id,
+            title: title,
+            poster_path: poster_path,
+            vote_average: vote_average,
+          }}
+        />
         <MovieRating current_rating={vote_average} movie_id={id} />
       </View>
     </View>
