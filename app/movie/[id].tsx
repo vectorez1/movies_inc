@@ -13,7 +13,7 @@ import MovieBanner from "@/components/MovieBanner";
 import RecomendedMovies from "@/components/RecomendedMovies";
 
 const MovieDetails = () => {
-  const { id } = useGlobalSearchParams(); // Get the movie ID from the route
+  const { id } = useGlobalSearchParams();
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["movieDetails", id],
