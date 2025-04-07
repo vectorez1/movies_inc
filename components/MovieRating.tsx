@@ -1,6 +1,6 @@
 import { Rating } from "react-native-ratings";
 import React, { useEffect, useState } from "react";
-import useSessionStore from "@/utils/storage";
+import useSessionStore from "@/utils/useSessionStore";
 import { setRating, getMovieRated } from "@/utils/api";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
@@ -50,13 +50,13 @@ const MovieRating = ({
         overflow: "hidden",
         padding: 5,
         paddingHorizontal: 10,
+        maxHeight: 44,
       }}
       ratingColor="#F9C74F"
       tintColor="white"
       ratingCount={5}
       imageSize={30}
       startingValue={starRating}
-      readonly={isLoading}
       onFinishRating={(rating: number) => {
         const newRating = rating * 2;
         setStarRating(rating);

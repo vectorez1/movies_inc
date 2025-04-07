@@ -2,14 +2,7 @@ import { Text, View, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import ScoreItem from "./ScoreItem";
 import { useRouter } from "expo-router";
-
-interface MovieItemProps {
-  id: number;
-  title: string;
-  poster_path: string;
-  vote_average: number;
-  release_date: string;
-}
+import MovieItemProps from "@/utils/types";
 
 export const MovieItem = ({
   id,
@@ -56,7 +49,7 @@ export const MovieItem = ({
           {title}
         </Text>
         <Text className="text-[7px]">
-          {release_date.split("-").reverse().join("/")}
+          {release_date && release_date.split("-").reverse().join("/")}
         </Text>
       </View>
     </TouchableOpacity>

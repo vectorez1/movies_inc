@@ -37,7 +37,7 @@ export default function MovieList() {
       }}
     >
       <FlatList
-        //Sorthing the movies by title
+        //Sorting the movies by title
         data={data.results.sort((a: Movie, b: Movie) =>
           a.title.localeCompare(b.title)
         )}

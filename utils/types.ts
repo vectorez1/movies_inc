@@ -1,18 +1,7 @@
-export default interface Movie {
+export default interface MovieItemProps {
   id: number;
   title: string;
-  overview?: string;
+  poster_path: string;
+  vote_average: number;
   release_date?: string;
-  backdrop_path?: string;
-  vote_average: number;
-  vote_count: number;
-  poster_path: string;
-  genre_ids: number[];
-  popularity?: number;
-}
-
-export default interface MovieItemProps {
-  title: string;
-  poster_path: string;
-  vote_average: number;
 }
