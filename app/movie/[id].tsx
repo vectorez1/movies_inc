@@ -2,10 +2,11 @@ import { View, Text, Image, ScrollView } from "react-native";
 import { useGlobalSearchParams } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
 import { getMovieDetails, getMovieCredits } from "../../utils/api";
-import React, { act } from "react";
+import React from "react";
 import Category from "@/components/Category";
 import ScoreItem from "@/components/ScoreItem";
 import Credit from "@/components/Credit";
+import { Rating } from "react-native-ratings";
 
 const MovieDetails = () => {
   const { id } = useGlobalSearchParams(); // Get the movie ID from the route
@@ -54,7 +55,7 @@ const MovieDetails = () => {
             }`,
           }}
         />
-        <View className=" flex flex-row gap-2 items-center absolute w-full bottom-[10px] p-2  ">
+        <View className=" flex flex-row gap-2 items-center absolute w-full top-[10px] py-2  ">
           <Text
             className="font-bold bg-banana h-fit overflow-hidden rounded-full mx-2 p-3"
             style={{ maxWidth: 300 }}
@@ -66,14 +67,33 @@ const MovieDetails = () => {
             className="scale-150 text-black"
           />
         </View>
+        {/*Rating UI*/}
+
+        <View className="w-full flex flex-row p-2 absolute bottom-[10px]">
+          <Rating
+            style={{
+              marginLeft: "auto",
+              backgroundColor: "white",
+              borderRadius: 15,
+              overflow: "hidden",
+              padding: 5,
+              paddingHorizontal: 10,
+            }}
+            ratingColor="#F9C74F"
+            tintColor="white"
+            ratingCount={5}
+            startingValue={data.vote_average / 2}
+            imageSize={30}
+          />
+        </View>
       </View>
       <View className="flex-col gap-4 px-4">
         <Text className="font-black">
           {data.release_date.split("-").reverse().join("/")}
         </Text>
-        <Category title="Genres" className="flex-row gap-2">
-          {data.genres ? (
-            data.genres.map((genre: { id: number; name: string }) => {
+        {data.genres.length > 0 ? (
+          <Category title="Genres" className="flex-row gap-2">
+            {data.genres.map((genre: { id: number; name: string }) => {
               return (
                 <Text
                   key={genre.id}
@@ -82,11 +102,11 @@ const MovieDetails = () => {
                   {genre.name}
                 </Text>
               );
-            })
-          ) : (
-            <Text>No genres available.</Text>
-          )}
-        </Category>
+            })}
+          </Category>
+        ) : (
+          <></>
+        )}
         <Category title="Overview">
           <Text>
             {data.overview ? data.overview : "No overview available."}

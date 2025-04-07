@@ -1,6 +1,8 @@
 import { View, Text } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import MovieList from "../../components/MovieList";
+import { useQuery } from "@tanstack/react-query";
+import { getSessionToken } from "@/utils/api";
 
 const Index = () => {
   return (

@@ -64,3 +64,7 @@ export const getGenreName = async (id: number) => {
   const genre = response.data.genres.find((g: any) => g.id === id);
   return genre ? genre.name : null;
 };
+export const getSessionToken = async () => {
+  const response = await api.get("/authentication/guest_session/new");
+  return response.data.guest_session_id;
+};
