@@ -2,15 +2,17 @@ import { View, Text, Image, ScrollView } from "react-native";
 import { useGlobalSearchParams } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
 import { getMovieDetails, getMovieCredits } from "../../utils/api";
-import React from "react";
+import React, { useEffect } from "react";
 import Category from "@/components/Category";
 import ScoreItem from "@/components/ScoreItem";
 import Credit from "@/components/Credit";
 import { Rating } from "react-native-ratings";
+import useSessionStore from "@/utils/storage";
+import MovieRating from "@/components/MovieRating";
 
 const MovieDetails = () => {
   const { id } = useGlobalSearchParams(); // Get the movie ID from the route
-  const [movie, setMovie] = React.useState(null); // State to hold movie details
+  const { token } = useSessionStore((state) => state);
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["movieDetails", id],
@@ -67,24 +69,10 @@ const MovieDetails = () => {
             className="scale-150 text-black"
           />
         </View>
-        {/*Rating UI*/}
 
+        {/*Rating UI*/}
         <View className="w-full flex flex-row p-2 absolute bottom-[10px]">
-          <Rating
-            style={{
-              marginLeft: "auto",
-              backgroundColor: "white",
-              borderRadius: 15,
-              overflow: "hidden",
-              padding: 5,
-              paddingHorizontal: 10,
-            }}
-            ratingColor="#F9C74F"
-            tintColor="white"
-            ratingCount={5}
-            startingValue={data.vote_average / 2}
-            imageSize={30}
-          />
+          <MovieRating current_rating={data.vote_average} movie_id={data.id} />
         </View>
       </View>
       <View className="flex-col gap-4 px-4">

@@ -3,8 +3,22 @@ import React, { useEffect } from "react";
 import MovieList from "../../components/MovieList";
 import { useQuery } from "@tanstack/react-query";
 import { getSessionToken } from "@/utils/api";
+import useSessionStore from "@/utils/storage";
 
 const Index = () => {
+  const { data, isLoading, error } = useQuery({
+    queryFn: getSessionToken,
+    queryKey: ["sessionToken"],
+  });
+
+  const { token, setToken, clearToken } = useSessionStore();
+
+  useEffect(() => {
+    if (data && !token) {
+      setToken(data);
+    }
+  }, [data]);
+
   return (
     <View className="w-[100%] h-full">
       <MovieList />
