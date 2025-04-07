@@ -10,6 +10,7 @@ import React, { useEffect } from "react";
 import Category from "@/components/Category";
 import Credit from "@/components/Credit";
 import MovieBanner from "@/components/MovieBanner";
+import RecomendedMovies from "@/components/RecomendedMovies";
 
 const MovieDetails = () => {
   const { id } = useGlobalSearchParams(); // Get the movie ID from the route
@@ -40,17 +41,6 @@ const MovieDetails = () => {
     );
   }
 
-  const { data: recommendations } = useQuery({
-    queryKey: ["movieRecommendations", id],
-    queryFn: () => getMovieRecommendations(Number(id)),
-  });
-
-  useEffect(() => {
-    if (recommendations) {
-      console.log("Recommendations:", recommendations.results);
-    }
-  }, [recommendations]);
-
   return (
     <ScrollView>
       <MovieBanner
@@ -64,6 +54,8 @@ const MovieDetails = () => {
         <Text className="font-black">
           {data.release_date.split("-").reverse().join("/")}
         </Text>
+
+        <RecomendedMovies movie_id={data.id} />
         {data.genres.length > 0 ? (
           <Category title="Genres" className="flex-row gap-2">
             {data.genres.map((genre: { id: number; name: string }) => {
