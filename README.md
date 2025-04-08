@@ -23,28 +23,38 @@ In the output, you'll find options to open the app in a
 - [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
 - [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+# 🎬 Movies Inc
 
-## Get a fresh project
+**Movies Inc** is a sleek and powerful movie discovery app that lets users dive deep into the world of cinema. From detailed movie info and cast credits to real-time recommendations, Movies Inc brings the magic of movies to your fingertips.
 
-When you're ready, run:
+Built with **React Native** and powered by modern APIs, it's designed for **speed, elegance**, and an unforgettable **user experience**. Whether you're a casual watcher or a full-on film buff, Movies Inc helps you find your next favorite movie—fast.
 
-```bash
-npm run reset-project
-```
+---
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## 📱 Pages
 
-## Learn more
+### 🏠 Home Page
 
-To learn more about developing your project with Expo, look at the following resources:
+- Browse the latest movies.
+- Tap on any movie to view its detailed information including poster, rating, overview, release date, genres, and cast.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### ⭐ Favorites Page
 
-## Join the community
+- Easily access your favorite movies in one place.
 
-Join our community of developers creating universal apps.
+---
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## ✨ Features
+
+- 🔁 **Movie Recommendations**  
+  Get movie suggestions based on the movie you’re currently viewing.
+
+- ❤️ **Favorites System**  
+  Like a movie? Tap the heart button to add it to your favorites list.
+
+- ⭐ **Rating System**  
+  Rate any movie and send your feedback directly to the API.
+
+---
+
+Happy watching! 🍿
