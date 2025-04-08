@@ -4,9 +4,12 @@ import Movie from "../utils/types";
 import { getMovies } from "../utils/api";
 import { MovieItem } from "./MovieItem";
 import { useQuery } from "@tanstack/react-query";
+import useSessionStore from "@/utils/useSessionStore";
 
 export default function MovieList() {
   const [page, setPage] = useState(1);
+
+  const { token } = useSessionStore();
 
   const { data, isLoading, error, isSuccess } = useQuery({
     queryKey: ["movies", page],

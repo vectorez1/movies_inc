@@ -1,19 +1,15 @@
 import { View, Text, ScrollView } from "react-native";
 import { useGlobalSearchParams } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
-import {
-  getMovieDetails,
-  getMovieCredits,
-  getMovieRecommendations,
-} from "../../utils/api";
-import React, { useEffect } from "react";
+import { getMovieDetails, getMovieCredits } from "../../utils/api";
+import React from "react";
 import Category from "@/components/Category";
 import Credit from "@/components/Credit";
 import MovieBanner from "@/components/MovieBanner";
 import RecomendedMovies from "@/components/RecomendedMovies";
 
 const MovieDetails = () => {
-  const { id } = useGlobalSearchParams(); // Get the movie ID from the route
+  const { id } = useGlobalSearchParams();
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["movieDetails", id],
