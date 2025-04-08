@@ -26,11 +26,7 @@ export const MovieItem = ({
         <Image
           className="rounded-lg w-[fit-content] h-[fit-content]"
           source={{
-            uri: `${
-              poster_path
-                ? "https://image.tmdb.org/t/p/w500" + poster_path
-                : "../assets/images/no_image.png"
-            }`,
+            uri: "https://image.tmdb.org/t/p/w500" + poster_path,
           }}
           style={{ width: 100, height: 150 }}
         />

@@ -2,7 +2,6 @@ import { View, Text, FlatList } from "react-native";
 import React from "react";
 import useFavoritesStore from "@/utils/useFavoritesStore";
 import MovieItem from "@/components/MovieItem";
-import Category from "@/components/Category";
 
 const Favorites = () => {
   const { favorites } = useFavoritesStore();

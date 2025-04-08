@@ -1,19 +1,24 @@
 import { View, Text, ScrollView } from "react-native";
 import { useGlobalSearchParams } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
-import {
-  getMovieDetails,
-  getMovieCredits,
-  getMovieRecommendations,
-} from "../../utils/api";
-import React, { useEffect } from "react";
+import { getMovieDetails, getMovieCredits } from "../../utils/api";
+import React from "react";
 import Category from "@/components/Category";
 import Credit from "@/components/Credit";
 import MovieBanner from "@/components/MovieBanner";
 import RecomendedMovies from "@/components/RecomendedMovies";
 
 const MovieDetails = () => {
-  const { id } = useGlobalSearchParams();
+  const params = useGlobalSearchParams();
+  const id = Array.isArray(params.id) ? params.id[0] : params.id;
+
+  if (!id || id == undefined) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text>Invalid movie ID</Text>
+      </View>
+    );
+  }
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["movieDetails", id],
@@ -25,7 +30,7 @@ const MovieDetails = () => {
     queryFn: () => getMovieCredits(Number(id)),
   });
 
-  if (isLoading && isLoadingCredits) {
+  if (isLoading && isLoadingCredits && !id) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <Text>Loading...</Text>
@@ -33,7 +38,7 @@ const MovieDetails = () => {
     );
   }
 
-  if (error) {
+  if (error || !data) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <Text>Error loading movie details</Text>
@@ -56,27 +61,24 @@ const MovieDetails = () => {
         </Text>
 
         <RecomendedMovies movie_id={data.id} />
-        {data.genres.length > 0 ? (
+
+        {data.genres.length > 0 && (
           <Category title="Genres" className="flex-row gap-2">
-            {data.genres.map((genre: { id: number; name: string }) => {
-              return (
-                <Text
-                  key={genre.id}
-                  className="text-sm  px-4 py-1 rounded-full font-bold bg-banana"
-                >
-                  {genre.name}
-                </Text>
-              );
-            })}
+            {data.genres.map((genre: { id: number; name: string }) => (
+              <Text
+                key={genre.id}
+                className="text-sm  px-4 py-1 rounded-full font-bold bg-banana"
+              >
+                {genre.name}
+              </Text>
+            ))}
           </Category>
-        ) : (
-          <></>
         )}
+
         <Category title="Overview">
-          <Text>
-            {data.overview ? data.overview : "No overview available."}
-          </Text>
+          <Text>{data.overview || "No overview available."}</Text>
         </Category>
+
         <Category title="Credits" className="flex gap-2">
           {isLoadingCredits ? (
             <Text>Loading credits...</Text>
